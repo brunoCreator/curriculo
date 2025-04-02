@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno Régis - Desenvolvedor Fullstack</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        :root {
+            --primary-color: #2a6592;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f5f7fa;
+            --dark-bg: #2c3e50;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+        }
+
+        body {
+
+            height: 100%;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            width: 100%;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--primary-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+        }
+
+        .tab-btn:hover {
+            background-color: #e6e6e6;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-description {
+            margin-bottom: 15px;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-item {
+            background-color: var(--light-bg);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .skill-item:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-img {
+            height: 160px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 15px;
+        }
+
+        .project-tech-item {
+            background-color: var(--light-bg);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .education-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .education-period {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .education-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .education-details {
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--dark-bg);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        body.dark-mode {
+            background-color: #1a1a2e;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .skill-category,
+        body.dark-mode .project-card,
+        body.dark-mode .education-card,
+        body.dark-mode .tab-btn {
+            background-color: #252541;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .skill-item,
+        body.dark-mode .project-tech-item {
+            background-color: #333355;
+            color: #f0f0f0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .name {
+                font-size: 2rem;
+            }
+
+            .title {
+                font-size: 1.2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 15px;
+            }
+
+            .timeline-item {
+                padding-left: 45px;
+            }
+
+            .timeline-item::before {
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-container">
+                <div class="profile-pic">BR</div>
+                <h1 class="name">Bruno Régis Machado de Oliveira</h1>
+                <h2 class="title">Desenvolvedor Fullstack & Game Developer</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>brunoregis1999@gmail.com</span>
+                    </div>
+                    <!-- <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>(00) 00000-0000</span>
+                    </div> -->
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Paracatu - Triângulo Mineiro, MG</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span>25 anos</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="about">Sobre</button>
+            <button class="tab-btn" data-tab="experience">Experiência</button>
+            <button class="tab-btn" data-tab="projects">Projetos</button>
+            <button class="tab-btn" data-tab="skills">Competências</button>
+            <button class="tab-btn" data-tab="education">Formação</button>
+        </div>
+
+        <div id="about" class="content-section active">
+            <h2 class="section-title">Perfil Profissional</h2>
+            <p>Desenvolvedor Fullstack com mais de 10 anos de experiência em diversas tecnologias, especializado em
+                desenvolvimento web, jogos digitais e soluções inovadoras. Experiência sólida em frameworks modernos,
+                bancos de dados relacionais e não-relacionais, e desenvolvimento multiplataforma.</p>
+            <p>Entusiasta de tecnologias emergentes com forte capacidade de adaptação e aprendizado contínuo.
+                Experiência em desenvolvimento de jogos utilizando Unity e Godot, bem como aplicações web e mobile com
+                React, Node.js, MongoDB, Flutter, entre outras tecnologias.</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2014 - Presente</div>
+                    <div class="timeline-title">Trajetória como Desenvolvedor</div>
+                    <div class="timeline-description">
+                        Iniciei minha carreira com desenvolvimento web, evoluindo para sistemas mais complexos e jogos
+                        digitais, sempre mantendo o foco em soluções inovadoras e tecnologias emergentes.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="experience" class="content-section">
+            <h2 class="section-title">Experiência Profissional</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 - Atual</div>
+                    <div class="timeline-title">Projetos Confidenciais (NDA)</div>
+                    <div class="timeline-description">
+                        Desenvolvimento sob acordo de confidencialidade para clientes estratégicos.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-title">Desenvolvimento de Jogos - Godot Engine</div>
+                    <div class="timeline-description">
+                        <ul>
+                            <li>Jogo FPS inspirado em CS:GO utilizando Godot e C#</li>
+                            <li>Jogo de RPG de ação inspirado em Diablo utilizando Godot e C#</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-title">Vertu - Plataforma de Avaliação de Políticos</div>
+                    <div class="timeline-description">
+                        Desenvolvimento full-stack de plataforma que utiliza APIs governamentais para transparência e
+                        avaliação de desempenho político.<br>
+                        <strong>Tecnologias:</strong> Flutter, Node.js e MongoDB
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-title">Aprov - Sistema Educacional Gamificado</div>
+                    <div class="timeline-description">
+                        Banco de questões e gerador de provas com elementos de gamificação para automatização de
+                        processos educacionais.<br>
+                        <strong>Tecnologias:</strong> React, MongoDB e Node.js
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2022</div>
+                    <div class="timeline-title">Desenvolvimento de Games - Unity</div>
+                    <div class="timeline-description">
+                        Criação de Games utilizando Unity e C#, incluindo simulador de fazenda, jogo de cartas
+                        colecionáveis e rogue-like 2D com geração procedural.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-title">Decido - Site de Arbitragem</div>
+                    <div class="timeline-description">
+                        Plataforma de arbitragem desenvolvida com MongoDB, Node.js e React Native.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2020</div>
+                    <div class="timeline-title">Automação Residencial com Arduino</div>
+                    <div class="timeline-description">
+                        Sistema de segurança e automação residencial com implementação de sensores e atuadores para
+                        controle inteligente.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2019</div>
+                    <div class="timeline-title">Software de arquitetura e Games - Unity 3D</div>
+                    <div class="timeline-description">
+                        Software de arquitetura com geração otimizada de Mesh 3D em tempo real e outro prototipos de
+                        games utilizando Unity e C#.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2018</div>
+                    <div class="timeline-title">LoadSkill - Plataforma de Cursos Online</div>
+                    <div class="timeline-description">
+                        Desenvolvimento completo de plataforma de criação e gerenciamento de cursos online.<br>
+                        <strong>Tecnologias:</strong> HTML, CSS, JavaScript, PHP, Bootstrap, MySQL
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2014 - 2017</div>
+                    <div class="timeline-title">Desenvolvimento Web Freelancer</div>
+                    <div class="timeline-description">
+                        Criação de diversos blogs e sites para clientes utilizando HTML, CSS, JavaScript e Bootstrap.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projects" class="content-section">
+            <h2 class="section-title">Projetos Destacados</h2>
+
+            <div class="projects-grid">
+
+
+                <div class="project-card">
+                    <div class="project-img">📊</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Vertu</h3>
+                        <p>Plataforma de avaliação de políticos utilizando APIs governamentais para promover
+                            transparência.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">Flutter</span>
+                            <span class="project-tech-item">Node.js</span>
+                            <span class="project-tech-item">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">📚</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Aprov</h3>
+                        <p>Sistema educacional gamificado com banco de questões e gerador de provas.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">React</span>
+                            <span class="project-tech-item">MongoDB</span>
+                            <span class="project-tech-item">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="project-card">
+                    <div class="project-img">🏠</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Automação Residencial</h3>
+                        <p>Sistema de segurança e automação para residências utilizando Arduino.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">Arduino</span>
+                            <span class="project-tech-item">C++</span>
+                            <span class="project-tech-item">IoT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">📱</div>
+                    <div class="project-content">
+                        <h3 class="project-title">LoadSkill</h3>
+                        <p>Plataforma de criação e gerenciamento de cursos online.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">PHP</span>
+                            <span class="project-tech-item">MySQL</span>
+                            <span class="project-tech-item">Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="project-card">
+                    <div class="project-img">📱</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Decido</h3>
+                        <p>Plataforma de arbitragem.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">MongoDB</span>
+                            <span class="project-tech-item">Node.js</span>
+                            <span class="project-tech-item">React Native</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">📱</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Software de Arquitetura.</h3>
+                        <p>Software de arquitetura com geração de mesh 3d otimizada em tempo real.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">PHP</span>
+                            <span class="project-tech-item">MySQL</span>
+                            <span class="project-tech-item">Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">🎲</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Jogo de Cartas Colecionáveis</h3>
+                        <p>Jogo de cartas inspirado em Hearthstone e Yu-Gi-Oh desenvolvido com Unity.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">Unity</span>
+                            <span class="project-tech-item">C#</span>
+                            <span class="project-tech-item">2D</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">🎮</div>
+                    <div class="project-content">
+                        <h3 class="project-title">FPS inspirado em CS:GO</h3>
+                        <p>Jogo de tiro em primeira pessoa desenvolvido com Godot Engine utilizando C#.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">Godot</span>
+                            <span class="project-tech-item">C#</span>
+                            <span class="project-tech-item">3D</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">🎮</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Rogue Like inspirado em Diablo 2</h3>
+                        <p>Jogo 3d com visão isométrica desenvolvido com Godot Engine utilizando C#.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-item">Godot</span>
+                            <span class="project-tech-item">C#</span>
+                            <span class="project-tech-item">3D</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="skills" class="content-section">
+            <h2 class="section-title">Competências Técnicas</h2>
+
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Linguagens de Programação</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">JavaScript/TypeScript</span>
+                        <span class="skill-item">C#</span>
+                        <span class="skill-item">PHP</span>
+                        <span class="skill-item">Java</span>
+                        <span class="skill-item">C/C++</span>
+                        <span class="skill-item">Dart</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Front-end</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">HTML5</span>
+                        <span class="skill-item">CSS3</span>
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">React Native</span>
+                        <span class="skill-item">Flutter</span>
+                        <span class="skill-item">Bootstrap</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Back-end</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Express.js</span>
+                        <span class="skill-item">PHP</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Bancos de Dados</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">MongoDB</span>
+                        <span class="skill-item">MySQL</span>
+                        <span class="skill-item">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Desenvolvimento de Jogos</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Unity (C#)</span>
+                        <span class="skill-item">Godot (C#)</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Design e Prototipagem</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Figma (UX/UI)</span>
+                        <span class="skill-item">Blender (3D)</span>
+                        <span class="skill-item">Krita</span>
+                        <span class="skill-item">Stable Diffusion</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>DevOps e Sistemas</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Linux</span>
+                        <span class="skill-item">Administração de Servidores</span>
+                        <span class="skill-item">Segurança/Pentest</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Fabricação Digital</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Impressão 3D</span>
+                        <span class="skill-item">Orca Slicer</span>
+                        <span class="skill-item">Cura Slicer</span>
+                        <span class="skill-item">CAD Básico Onshape</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Línguas</h3>
+                    <div class="skill-list">
+                        <span class="skill-item">Português(Nativo)</span>
+                        <span class="skill-item">Inglês(Fluente)</span>
+                        <span class="skill-item">Espanhol(Básico)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="education" class="content-section">
+            <h2 class="section-title">Formação Acadêmica</h2>
+
+            <div class="education-card">
+                <div class="education-period">2019 - 2022</div>
+                <h3 class="education-title">Análise e Desenvolvimento de Sistemas</h3>
+                <div class="education-institution">Instituto Federal do Triângulo Mineiro</div>
+                <div class="education-details">
+                    <p>Durante o curso, desenvolvi diversos projetos acadêmicos utilizando PostgreSQL, Java, PHP, MySQL,
+                        C/C++/C#, Android e Inteligência Artificial, ampliando meus conhecimentos em desenvolvimento de
+                        software e sistemas.</p>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-period">2014 - 2017</div>
+                <h3 class="education-title">Técnico em Informática</h3>
+                <div class="education-institution">Instituto Federal do Triângulo Mineiro</div>
+                <div class="education-details">
+                    <p>Formação técnica com foco em programação e desenvolvimento web, incluindo projetos práticos em
+                        diversas tecnologias e fundamentos de sistemas de informação.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mode-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Bruno Régis Machado de Oliveira | Desenvolvedor Fullstack & Game Developer</p>
+    </footer>
+
+    <!-- Font Awesome para ícones -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Alternância de tabs
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remover classe ativa de todos os botões e seções
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    contentSections.forEach(s => s.classList.remove('active'));
+
+                    // Adicionar classe ativa ao botão clicado
+                    btn.classList.add('active');
+
+                    // Ativar a seção correspondente
+                    const tabId = btn.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Alternância de modo claro/escuro
+            const modeToggle = document.querySelector('.mode-toggle');
+            const body = document.body;
+            const icon = modeToggle.querySelector('i');
+
+            modeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+
+                if (body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            });
+
+            // Animação para os elementos da timeline ao scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+
+            // Animação para os cards de projetos
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+
+</html>
